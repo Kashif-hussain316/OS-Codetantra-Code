@@ -1,0 +1,46 @@
+#include <stdio.h>
+            Node *next = temp->next;
+            free(temp);
+            temp = next;
+        }
+        printf(" -> NULL\n");
+    }
+}
+
+int main() {
+    init_disk();
+
+    int choice;
+    while (1) {
+        printf("File Allocation Strategies Simulation\n");
+        printf("1. Sequential Allocation\n");
+        printf("2. Indexed Allocation\n");
+        printf("3. Linked Allocation\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+
+        if (scanf("%d", &choice) != 1) {
+            printf("Invalid input\n");
+            while(getchar() != '\n');
+            continue;
+        }
+
+        if (choice == 4) break;
+
+        int file_size;
+        printf("Enter file size (in blocks): ");
+        if (scanf("%d", &file_size) != 1) {
+            printf("Invalid input\n");
+            while(getchar() != '\n');
+            continue;
+        }
+
+        switch (choice) {
+            case 1: sequential_allocation(file_size); break;
+            case 2: indexed_allocation(file_size); break;
+            case 3: linked_allocation(file_size); break;
+            default: printf("Invalid choice\n");
+        }
+    }
+    return 0;
+}
