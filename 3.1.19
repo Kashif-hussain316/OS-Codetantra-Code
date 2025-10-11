@@ -1,0 +1,38 @@
+#include <stdio.h>
+    }
+
+    printf("Enter the initial head position: ");
+    scanf("%d", &head);
+
+    printf("Enter the direction (1 for right, 0 for left): ");
+    scanf("%d", &direction);
+
+    qsort(requests, n, sizeof(int), compare);
+
+    int seek_sequence[n + 1];
+    int seq_index = 0;
+    seek_sequence[seq_index++] = head;
+    int total_seek = 0;
+
+    // Find the split point
+    int split = 0;
+    while (split < n && requests[split] < head) split++;
+
+    if (direction == 1) { // Moving right
+        for (i = split; i < n; i++) seek_sequence[seq_index++] = requests[i];
+        for (i = split - 1; i >= 0; i--) seek_sequence[seq_index++] = requests[i];
+    } else { // Moving left
+        for (i = split - 1; i >= 0; i--) seek_sequence[seq_index++] = requests[i];
+        for (i = split; i < n; i++) seek_sequence[seq_index++] = requests[i];
+    }
+
+    for (i = 1; i < seq_index; i++) total_seek += abs(seek_sequence[i] - seek_sequence[i - 1]);
+
+    printf("Seek sequence:\n");
+    for (i = 0; i < seq_index; i++) printf("%d -> ", seek_sequence[i]);
+    printf("End\n");
+
+    printf("Total seek time: %d\n", total_seek);
+
+    return 0;
+}
