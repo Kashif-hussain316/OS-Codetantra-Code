@@ -1,0 +1,32 @@
+#include <stdio.h>
+        printf("Enter choice: ");
+        if (scanf("%d", &choice) != 1) break;
+        if (choice == 3) break;
+
+        if (choice == 1) {
+            printf("Which philosopher (0-%d) is hungry: ", N - 1);
+            if (scanf("%d", &phil) != 1) break;
+            pickup(phil);
+        } else if (choice == 2) {
+            printf("Which philosopher (0-%d) puts down chopsticks: ", N - 1);
+            if (scanf("%d", &phil) != 1) break;
+            putdown(phil);
+        } else {
+            printf("Invalid choice\n");
+            continue;
+        }
+
+        printf("States:\n");
+        for (int i = 0; i < N; i++) {
+            const char* s = state[i] == THINKING ? "Thinking" :
+                            state[i] == HUNGRY ? "Hungry" : "Eating";
+            printf("Philosopher %d: %s\n", i, s);
+        }
+        printf("Chopsticks:\n");
+        for (int i = 0; i < N; i++) {
+            printf("Chopstick %d: %s\n", i, chopstick[i] ? "Taken" : "Free");
+        }
+    }
+    return 0;
+}
+
