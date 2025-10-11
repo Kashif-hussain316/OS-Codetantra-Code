@@ -1,0 +1,46 @@
+#include <stdio.h>
+
+    qsort(left, k, sizeof(int), compare);
+    qsort(right, j, sizeof(int), compare);
+
+    int index = 0;
+    temp_head = head;
+    seek_sequence[index++] = head;
+
+    for (i = 0; i < j; i++) {
+        seek_count += abs(temp_head - right[i]);
+        temp_head = right[i];
+        seek_sequence[index++] = temp_head;
+    }
+
+    if (temp_head != disk_size) {
+        seek_count += abs(temp_head - disk_size);
+        temp_head = disk_size;
+        seek_sequence[index++] = temp_head;
+}
+
+    seek_count += temp_head;
+    temp_head = 0;
+    seek_sequence[index++] = temp_head;
+
+    for (i = 0; i < k; i++) {
+        seek_count += abs(temp_head - left[i]);
+        temp_head = left[i];
+        seek_sequence[index++] = temp_head;
+    }
+
+    printf("Seek Sequence: ");
+    for (i = 0; i < index; i++) {
+        printf("%d", seek_sequence[i]);
+        if (i == j + 1)
+            printf(" (Jump to end) -> ");
+        else if (i == j + 2)
+            printf(" (Jump to start) -> ");
+        else if (i != index - 1)
+            printf(" -> ");
+    }
+
+    printf("\nTotal Seek Operations: %d\n", seek_count);
+
+    return 0;
+}
