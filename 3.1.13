@@ -1,0 +1,58 @@
+#include <stdio.h>
+    for (i = 0; i < P; i++) {
+        for (j = 0; j < R; j++) {
+            Need[i][j] = Max[i][j] - Allocation[i][j];
+        }
+    }
+
+    // Safety algorithm
+    bool Finish[P];
+    for (i = 0; i < P; i++)
+        Finish[i] = false;
+
+    int safeSeq[P], count = 0;
+    bool found;
+
+    while (count < P) {
+        found = false;
+        for (i = 0; i < P; i++) {
+            if (!Finish[i]) {
+                bool possible = true;
+                for (j = 0; j < R; j++) {
+                    if (Need[i][j] > Available[j]) {
+                        possible = false;
+                        break;
+                    }
+                }
+                if (possible) {
+                    for (j = 0; j < R; j++)
+                        Available[j] += Allocation[i][j];
+                    safeSeq[count++] = i;
+                    Finish[i] = true;
+                    found = true;
+                }
+            }
+        }
+        if (!found) break; // no process could be allocated
+    }
+
+    // Check result
+    if (count == P) {
+        printf("No deadlock\n");
+        printf("Safe sequence: ");
+        for (i = 0; i < P; i++) {
+            printf("P%d ", safeSeq[i]);
+        }
+        printf("\n");
+    } else {
+        printf("Deadlock: ");
+        for (i = 0; i < P; i++) {
+            if (!Finish[i]) {
+                printf("P%d ", i);
+            }
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
